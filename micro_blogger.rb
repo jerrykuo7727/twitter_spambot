@@ -27,8 +27,9 @@ class MicroBlogger
       case command
         when 'q' then puts "Goodbye!"
         when 't' then tweet(parts[1..-1].join(" "))
-        when 'spam' then spam_my_followers(parts[1..-1].join(" "))
         when 'dm' then dm(parts[1], parts[2..-1].join(" "))
+        when 'spam' then spam_my_followers(parts[1..-1].join(" "))
+        when 'elt' then everyones_last_tweet
         else
           puts "Sorry, I don't know how to #{command}"
       end
@@ -55,6 +56,18 @@ class MicroBlogger
 
   def spam_my_followers(message)
     followers_list.each { |follower| dm(follower, message) }
+  end
+
+  def everyones_last_tweet
+    friends = @client.friends
+    friends.each do |id|
+      friend = @client.user(id)
+      friend_name = friend.name
+      last_message = friend.status.text
+      puts "#{friend_name} said..."
+      puts "#{last_message}"
+      puts ""
+    end
   end
 end
 
