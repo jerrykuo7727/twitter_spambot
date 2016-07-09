@@ -21,7 +21,7 @@ class MicroBlogger
     puts "Welcome to the JSL Twitter Client!"
     command = ""
     while command != "q"
-      print "enter command: "
+      print "Enter command ('help' to list all commands): "
       input = gets.chomp
       parts = input.split(" ")
       command = parts[0]
@@ -33,8 +33,9 @@ class MicroBlogger
         when 'elt' then everyones_last_tweet
         when 's' then shorten(parts[1..-1].join(" "))
         when 'turl' then tweet(parts[1..-2].join(" ") << " " << shorten(parts[-1]))
+        when 'help' then help
         else
-          puts "Sorry, I don't know how to #{command}"
+          puts "Sorry, '#{command}' is not a valid command."
       end
     end
   end
@@ -66,6 +67,7 @@ class MicroBlogger
     friends = friends.sort_by do |id|
       @client.user(id).name.downcase
     end
+    puts ""
     friends.each do |id|
       friend = @client.user(id)
       friend_name = friend.name
@@ -84,6 +86,18 @@ class MicroBlogger
     short_url = bitly.shorten(original_url).short_url
     puts "Done! Short URL: #{short_url}"
     short_url
+  end
+
+  def help
+    puts ""
+    puts "'q': quit the twitter client"
+    puts "'t': post a tweet (format: t <text>)"
+    puts "'dm': send a direct message (format: dm <name> <message>)"
+    puts "'spam': send a direct message to all followers (format: spam <message>)"
+    puts "'elt': show all last tweets of who you are following"
+    puts "'s': shorten a URL (format: s <URL>)"
+    puts "'turl': post a tweet ending with a URL shorten (format: turl <text> <URL>)"
+    puts ""
   end
 end
 
