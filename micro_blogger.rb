@@ -27,6 +27,7 @@ class MicroBlogger
       case command
         when 'q' then puts "Goodbye!"
         when 't' then tweet(parts[1..-1].join(" "))
+        when 'spam' then spam_my_followers(parts[1..-1].join(" "))
         when 'dm' then dm(parts[1], parts[2..-1].join(" "))
         else
           puts "Sorry, I don't know how to #{command}"
@@ -44,6 +45,16 @@ class MicroBlogger
     else
       puts "Error: You can only DM people who follow you"
     end
+  end
+
+  def followers_list
+    screen_names = []
+    @client.followers.each { |follower| screen_names << @client.user(follower).screen_name }
+    screen_names
+  end
+
+  def spam_my_followers(message)
+    followers_list.each { |follower| dm(follower, message) }
   end
 end
 
