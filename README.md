@@ -1,5 +1,5 @@
 # Twitter Client
-This project is built following the tutorial from [Jumpstart Lab](http://tutorials.jumpstartlab.com/projects/microblogger.html).
+A simple Twitter client built with Twitter API of Ruby following [the tutorial from Jumpstart Lab](http://tutorials.jumpstartlab.com/projects/microblogger.html).
 
 #### The twitter client can do the commands below:<br>
 * <b>'q'</b>:&nbsp; quit the twitter client<br>
